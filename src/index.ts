@@ -1,18 +1,23 @@
-import * as express from "express";
-import * as functions from 'firebase-functions';
 import * as bodyParser from "body-parser";
+import * as express from "express";
+import * as functions from "firebase-functions";
+import { CustomerRoute } from "./routes/customer-route";
+class App {
+    public app: express.Application;
+    public routePrv: CustomerRoute = new CustomerRoute();
 
-const app = express();
+    constructor() {
+        this.app = express();
+        this.config();
+        this.routePrv.routes(this.app);
+    }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+    private config(): void {
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({extended: false}));
+    }
+}
+
+const app = new App().app;
 
 export const api = functions.https.onRequest(app);
-
-app.post('/users', (req, res) => {
-    res.send(`New user created ${req.body}`);
-});
-
-app.get('/users', (req, res) => {
-    res.status(200). send('Carlos Anjos');
-});

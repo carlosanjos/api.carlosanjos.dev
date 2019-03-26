@@ -1,9 +1,10 @@
 language: node_js
 node_js:
-  - "8"
+  - "stable"
 script:
  - echo "Beam me up, Scotty"
 install:
   - npm install -g firebase-tools
+  - npm run build
 after_success:
   - firebase deploy --project carlosanjos-dev --token $FIREBASE_TOKEN
