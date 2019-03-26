@@ -4,6 +4,7 @@ node_js:
 script:
  - echo "Beam me up, Scotty"
 install:
+  - npm i
   - npm install -g firebase-tools
   - npm run build
 after_success:
